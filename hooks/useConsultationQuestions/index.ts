@@ -1,0 +1,1 @@
+export { useConsultationQuestions } from './useConsultationQuestions';

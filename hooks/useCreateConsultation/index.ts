@@ -1,0 +1,1 @@
+export { useCreateConsultation } from './useCreateConsultation';
