@@ -2,7 +2,7 @@ export type Consultation = {
   id: string;
   questions: {
     questionId: string;
-    answer: boolean;
+    answer: boolean | string;
   }[];
 };
 

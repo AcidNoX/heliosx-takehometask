@@ -16,6 +16,7 @@ export const Button = ({
         $variant={variant}
         onPress={rest.onPress}
         disabled={disabled}
+        $disabled={disabled}
         testID={testID}
       >
         <Typography
@@ -30,7 +31,7 @@ export const Button = ({
 
   return (
     <Link asChild href={rest.href} disabled={disabled} testID={testID}>
-      <StyledButton $variant={variant}>
+      <StyledButton $variant={variant} $disabled={disabled}>
         <Typography
           variant="button"
           color={variant === 'primary' ? 'fontWhite' : 'fontOrange'}

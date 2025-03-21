@@ -18,6 +18,7 @@ export const Colors = {
   },
   button: {
     border: '#fa650a',
+    disabled: '#808080',
     primary: {
       background: '#fa650a',
     },

@@ -1,9 +1,10 @@
-import { Column, Row } from '@/components/Containers';
 import { Pattern, match } from 'ts-pattern';
 
-import { Button } from '@/components/Button';
+import { Column } from '@/components/Containers';
 import { ConsultationForm } from '@/hooks/useConsultationForm/useConsultationForm.schema';
 import { ConsultationQuestionProps } from './ConsultationQuestion.types';
+import { TextInput } from '../TextInput.component';
+import { Toggle } from '../Toggle.component';
 import { Typography } from '@/components/Typography';
 import { useController } from 'react-hook-form';
 
@@ -17,39 +18,38 @@ export const ConsultationQuestion = ({
 
   const answer = match(controller.field.value)
     .with({ answer: Pattern.boolean }, (v) => v.answer)
+    .with({ answer: Pattern.string }, (v) => v.answer)
     .otherwise(() => undefined);
 
-  const handleYes = () => {
-    controller.field.onChange({
-      questionId: question.id,
-      answer: true,
-    });
-  };
-
-  const handleNo = () => {
-    controller.field.onChange({
-      questionId: question.id,
-      answer: false,
-    });
-  };
+  const formElement = match(question.type)
+    .with('boolean', () => (
+      <Toggle
+        value={answer as boolean | undefined}
+        onChange={(answer) =>
+          controller.field.onChange({
+            questionId: question.id,
+            answer,
+          })
+        }
+      />
+    ))
+    .with('text', () => (
+      <TextInput
+        value={answer as string | undefined}
+        onChange={(answer) => {
+          controller.field.onChange({
+            questionId: question.id,
+            answer,
+          });
+        }}
+      />
+    ))
+    .exhaustive();
 
   return (
     <Column $bgColor="surfactTertiary" $padding="md" $gap="md">
       <Typography variant="subheader">{question.text}</Typography>
-      <Row $gap="md">
-        <Button
-          variant={answer === true ? 'primary' : 'outline'}
-          onPress={handleYes}
-        >
-          Yes
-        </Button>
-        <Button
-          variant={answer === false ? 'primary' : 'outline'}
-          onPress={handleNo}
-        >
-          No
-        </Button>
-      </Row>
+      {formElement}
     </Column>
   );
 };

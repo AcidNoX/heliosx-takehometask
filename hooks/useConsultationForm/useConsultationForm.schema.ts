@@ -6,7 +6,7 @@ export const buildSchema = (numberOfQuestions: number) => {
       .array(
         zod.object({
           questionId: zod.string(),
-          answer: zod.boolean(),
+          answer: zod.union([zod.boolean(), zod.string().min(10)]),
         }),
       )
       .length(numberOfQuestions),

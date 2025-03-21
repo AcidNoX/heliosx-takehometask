@@ -24,6 +24,7 @@ export const useConsultationForm = (
   const router = useRouter();
   const form = useForm({
     resolver: zodResolver(buildSchema(questions?.length ?? 5)),
+    mode: 'onChange',
   });
 
   const formValues = useWatch(form);
